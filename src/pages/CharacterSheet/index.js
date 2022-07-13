@@ -19,7 +19,7 @@ const CharacterSheet = () => {
 
   return (
     <main style={style}>
-      <Grid width={style.width} />
+      <Grid width={style.width} editMode={editMode} />
       <EditToggle toggleEditMode={toggleEditMode} editMode={editMode} />
     </main>
   );
