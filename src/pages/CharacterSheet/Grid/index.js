@@ -3,6 +3,8 @@ import "./index.scss";
 import GridTile from "./GridTile";
 
 const Grid = ({ width, editMode }) => {
+  const [selectedGridTile, toggleSelectedGridTile] = React.useState(null);
+
   const rowSquares = 20;
   const colSquares = 14;
 
@@ -21,7 +23,15 @@ const Grid = ({ width, editMode }) => {
   const gridRender = () => {
     const grid = [];
     for (let i = 0; i < rowSquares * colSquares; i++) {
-      grid.push(<GridTile squareStyle={squareStyle} editMode={editMode} />);
+      grid.push(
+        <GridTile
+          index={i}
+          squareStyle={squareStyle}
+          editMode={editMode}
+          toggleSelectedGridTile={toggleSelectedGridTile}
+          selectedGridTile={selectedGridTile}
+        />
+      );
     }
     return grid;
   };
