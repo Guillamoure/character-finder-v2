@@ -1,38 +1,26 @@
 import React from "react";
 
-const GridTile = ({
-  index,
-  editMode,
-  squareStyle,
-  toggleSelectedGridTile,
-  selectedGridTile,
-}) => {
+const GridTile = ({ squareStyle, area }) => {
   const [hover, toggleHover] = React.useState(false);
 
-  if (hover && editMode) {
-    squareStyle = { ...squareStyle, background: "black" };
-  }
+  // if (hover && editMode) {
+  squareStyle = { ...squareStyle, gridArea: area };
+  // }
 
-  const canHover = !selectedGridTile;
+  // const canHover = !selectedGridTile;
 
   const renderClick = () => {
-    if (editMode) {
-      if (selectedGridTile === index) {
-        toggleSelectedGridTile(null);
-      } else {
-        toggleSelectedGridTile(index);
-      }
-    }
+    //   if (editMode) {
+    //     if (selectedGridTile === index) {
+    //       toggleSelectedGridTile(null);
+    //     } else {
+    //       toggleSelectedGridTile(index);
+    //     }
+    //   }
   };
 
   return (
-    <div
-      className="square"
-      style={squareStyle}
-      onMouseEnter={() => canHover && toggleHover(true)}
-      onMouseLeave={() => canHover && toggleHover(false)}
-      onClick={renderClick}
-    ></div>
+    <div className="square" style={squareStyle} onClick={renderClick}></div>
   );
 };
 

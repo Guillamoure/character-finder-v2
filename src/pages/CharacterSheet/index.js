@@ -31,7 +31,6 @@ const CharacterSheet = () => {
       spacing.areas[0] ||
       spacing.areas[0].length !== spacing.grids.w
     ) {
-      console.log(";lasdjkfg");
       let areas = [];
       let count = 0;
       for (let i = 0; i < spacing.grids.h; i++) {
@@ -49,7 +48,6 @@ const CharacterSheet = () => {
   }, []);
 
   React.useEffect(() => {
-    console.log(spacing.areas[0]?.join(" "));
     let areas = [...spacing.areas];
     if (!areas.length) {
       return;
@@ -120,10 +118,21 @@ const CharacterSheet = () => {
     }
   };
 
+  const renderGrids = () => {
+    return spacing.areas.map((a) => {
+      return a.map((b) => {
+        if (b.includes("square")) {
+          return <GridTile area={b} />;
+        }
+      });
+    });
+  };
+
   return (
     <main style={style} id="base-grid" onClick={track}>
       <EditToggle toggleEditMode={toggleEditMode} editMode={editMode} />
       <AbilityScores />
+      {renderGrids()}
     </main>
   );
 };
