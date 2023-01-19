@@ -4,7 +4,11 @@ const GridTile = ({ squareStyle, area }) => {
   const [hover, toggleHover] = React.useState(false);
 
   // if (hover && editMode) {
-  squareStyle = { ...squareStyle, gridArea: area };
+  squareStyle = {
+    ...squareStyle,
+    gridArea: area,
+    backgroundColor: area.includes("red") ? "red" : "",
+  };
   // }
 
   // const canHover = !selectedGridTile;
@@ -20,7 +24,12 @@ const GridTile = ({ squareStyle, area }) => {
   };
 
   return (
-    <div className="square" style={squareStyle} onClick={renderClick}></div>
+    <div
+      className="square"
+      style={squareStyle}
+      onClick={renderClick}
+      data-id={area.replace("square", "")}
+    ></div>
   );
 };
 
