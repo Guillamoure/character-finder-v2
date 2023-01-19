@@ -24,7 +24,7 @@ const CharacterSheet = () => {
   });
 
   React.useEffect(() => {
-    console.log(spacing.areas.length);
+    // console.log(spacing.areas.length);
     if (
       !spacing.areas.length ||
       spacing.areas.length !== spacing.grids.h ||
@@ -75,7 +75,6 @@ const CharacterSheet = () => {
     spacing.areas.forEach((x) => {
       string += `'${x.join(" ")}'`;
     });
-    console.log(string);
     return string;
   };
 
@@ -90,31 +89,91 @@ const CharacterSheet = () => {
   const track = (e) => {
     console.log(e.clientX, e.clientY);
     console.log(e);
+    // theres a click event, and a mouse down
+    // why both?
+
     const elementWidthWithoutPadding =
-      e.target.offsetWidth - window.innerWidth * 0.04;
+      e.target.parentElement.offsetWidth - window.innerWidth * 0.04;
     const elementHeightWithoutPadding =
-      e.target.offsetHeight - window.innerWidth * 0.04;
+      e.target.parentElement.offsetHeight - window.innerWidth * 0.04;
+
     const space = {
-      left: e.target.offsetLeft + window.innerWidth * 0.02,
+      left: e.target.parentElement.offsetLeft + window.innerWidth * 0.02,
       right:
-        e.target.offsetLeft + e.target.offsetWidth - window.innerWidth * 0.02,
-      top: e.target.offsetTop + window.innerWidth * 0.02,
+        e.target.parentElement.offsetLeft +
+        e.target.parentElement.offsetWidth -
+        window.innerWidth * 0.02,
+      top: e.target.parentElement.offsetTop + window.innerWidth * 0.02,
       bottom:
-        e.target.offsetTop + e.target.offsetHeight - window.innerWidth * 0.02,
+        e.target.parentElement.offsetTop +
+        e.target.parentElement.offsetHeight -
+        window.innerWidth * 0.02,
     };
-    console.log(space);
-    if (e.target.id === "base-grid") {
-      console.log(e.target.id);
+    // space finds the borders of the paper, not the square itself
+    // console.log(space);
+
+    if (e.target.className === "square") {
+      // if you click on a square
+      console.log(e.target.outerHTML);
       if (e.clientX >= space.left && e.clientX <= space.right) {
-        console.log(
-          `${(e.clientX - space.left) / elementWidthWithoutPadding}%`
-        );
+        // and that square is in the horizonal space of the page
+        // console.log(
+        //   `${
+        //     Math.round(
+        //       ((e.clientX - space.left) / elementWidthWithoutPadding) * 10000
+        //     ) / 100
+        //   }% from left side`
+        // );
         if (e.clientY >= space.top && e.clientY <= space.bottom) {
-          console.log(
-            `${(e.clientY - space.top) / elementHeightWithoutPadding}%`
-          );
+          // and that square is in the vertical space of the page
+          // console.log(
+          //   `${
+          //     Math.round(
+          //       ((e.clientY - space.top) / elementHeightWithoutPadding) * 10000
+          //     ) / 100
+          //   }% from top`
+          // );
+          // let row = Math.floor(
+          //   ((e.clientY - space.top) / elementHeightWithoutPadding) *
+          //     spacing.grids.h
+          // );
+
+          // let col = Math.floor(
+          //   ((e.clientX - space.left) / elementWidthWithoutPadding) *
+          //     spacing.grids.w
+          // );
+          let row = null;
+          let col = null;
+          let areas = [...spacing.areas];
+
+          console.log(e.target);
+
+          for (let i = 0; i < areas.length; i++) {
+            if (row === null && col === null) {
+              for (let j = 0; j < areas[i].length; j++) {
+                if (
+                  areas[i][j].includes(e.target.dataset.id) &&
+                  row === null &&
+                  col === null
+                ) {
+                  row = i;
+                  col = j;
+                  break;
+                }
+              }
+            }
+          }
+
+          console.log(row, col);
+          areas[row][col] = areas[row][col] + "red";
+          updateSpacing({ ...spacing, areas });
         }
       }
+    } else if (e.target.localName === "section") {
+      console.log("bah!");
+      let widthOfElement = e.target.offsetWidth / elementWidthWithoutPadding;
+      // revist above commented out code for this story
+      // to see if you need it, if not, remove it
     }
   };
 
@@ -129,7 +188,7 @@ const CharacterSheet = () => {
   };
 
   return (
-    <main style={style} id="base-grid" onClick={track}>
+    <main style={style} id="base-grid" onClick={track} onMouseDown={track}>
       <EditToggle toggleEditMode={toggleEditMode} editMode={editMode} />
       <AbilityScores />
       {renderGrids()}
