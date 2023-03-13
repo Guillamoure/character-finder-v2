@@ -90,7 +90,7 @@ const Page = ({dragData, setDragData, hoveredSquare, setHoveredSquare, handleDra
       if (item.id){
         let [rowStart, rowEnd, colStart, colEnd] = findValidIndices()
         let updateModules = [...modules].map(box => {
-          if (box.id === item.id){
+          if (box.data.id === item.id){
             return {...box, data: {...box.data, rowStart, rowEnd, colStart, colEnd}}
           } else {
             return box
@@ -155,7 +155,14 @@ const Page = ({dragData, setDragData, hoveredSquare, setHoveredSquare, handleDra
 
   // TODO: this is wrong! it should find the element with the highest index at the end, and use that +1
   const countOfThisComponent = (item) => {
-    return modules.filter(b => b.element === item.element).length
+    let highestIndex = -1
+    modules.forEach(b => {
+      if (b.moduleType === item.moduleType){
+        let number = parseInt(b.data.id.split(item.moduleType)[1])
+        highestIndex = number > highestIndex ? number : highestIndex
+      }
+    })
+    return highestIndex + 1
   }
 
   const isValid = () => {

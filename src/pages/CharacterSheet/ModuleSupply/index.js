@@ -10,9 +10,12 @@ const ModuleSuppply = ({hiddenSupply, toggleHiddenSupply, handleDrag}) => {
       return <button id="supply-button" onClick={() => toggleHiddenSupply(false)}>+</button>
     } else {
       return (
-        <ModuleContainer handleDrag={handleDrag} moduleType={"smallTextBox"}>
-          <SmallTextBox/>
-        </ModuleContainer>
+        <>
+          <ModuleContainer handleDrag={handleDrag} moduleType={"smallTextBox"}>
+            <SmallTextBox/>
+          </ModuleContainer>
+          <button id="supply-button" style={{width: "90%", bottom: "5%", fontSize: "1.1em"}} onClick={() => toggleHiddenSupply(true)}>Close Modules</button>
+        </>
       )
     }
   

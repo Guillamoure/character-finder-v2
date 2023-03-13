@@ -9,7 +9,7 @@ const ModuleContainer = (props) => {
   
 	const [{getInitialClientOffset, getInitialSourceClientOffset, isDragging}, drag] = useDrag(() => ({
 		type: "MODULE",
-		item: {moduleType},
+		item: {moduleType, id},
 		collect: (monitor) => ({
 			getInitialClientOffset: monitor.getInitialClientOffset(),
 			getInitialSourceClientOffset: monitor.getInitialSourceClientOffset(),
@@ -27,7 +27,7 @@ const ModuleContainer = (props) => {
 			perX = (getInitialClientOffset.x - getInitialSourceClientOffset.x)/ width
 			perY = (getInitialClientOffset.y - getInitialSourceClientOffset.y)/ height
 	
-			handleDrag({perX, perY, w, h, id: "small-text-box"})
+			handleDrag({perX, perY, w, h, id})
 	
 		}
 	}, [isDragging])
