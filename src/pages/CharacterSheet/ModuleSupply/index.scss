@@ -1,0 +1,29 @@
+#supply-button {
+  position: absolute;
+  right: 2%;
+  bottom: 2%;
+  width: 40px;
+  height: 40px;
+  background-color: gray;
+  text-align: center;
+  border-radius: 5px;
+  box-sizing: border-box;
+  font-size: 2em;
+}
+
+#module-supply {
+  position: fixed;
+  right: 0;
+  width: 25%;
+  background-color: gray;
+  height: 100vh;
+  top: 0;
+  padding: 1em;
+}
+
+.module {
+  background-color: gold;
+  margin: 5px;
+  border-radius: 10px;
+  box-sizing: border-box;
+}

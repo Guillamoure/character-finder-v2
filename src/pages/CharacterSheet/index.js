@@ -1,11 +1,69 @@
-import React from "react";
+import React, {useState} from "react";
 import "./index.scss";
-import Grid from "./Grid";
+import { useDrop } from "react-dnd";
+import Page from "./Page";
 import EditToggle from "./EditToggle";
 import AbilityScores from "./CharacterData/AbiltyScores";
-import GridTile from "./Grid/GridTile";
+import GridTile from "./Page/GridTile";
+import { findSectionPercentage } from './utils'
+import ModuleSuppply from "./ModuleSupply";
+
 
 const CharacterSheet = () => {
+
+  const [dragData, setDragData] = useState({})
+  const [hoveredSquare, setHoveredSquare] = useState("")
+  const [hiddenSupply, toggleHiddenSupply] = useState(true)
+
+  const handleDrop = () => {
+    setDragData({})
+    setHoveredSquare("")
+  }
+
+  const [, drop] = useDrop(() => ({
+    accept: "MODULE",
+    drop: handleDrop
+  }))
+
+  const handleDrag = ({perX, perY, w, h, id}) => {
+    if (!perX){
+      setDragData({})
+    }
+    let countW = findSectionPercentage(w, perX)
+    let countH = findSectionPercentage(h, perY)
+
+    setDragData({
+      unitsWide: w,
+      unitsHigh: h,
+      percentageX: countW,
+      percentageY: countH,
+      id
+    })
+  }
+
+  return (
+    <main ref={drop} id="character-sheet">
+      <Page 
+        dragData={dragData}
+        setDragData={setDragData}
+        hoveredSquare={hoveredSquare}
+        setHoveredSquare={setHoveredSquare}
+        handleDrag={handleDrag}
+      />
+      <ModuleSuppply hiddenSupply={hiddenSupply} toggleHiddenSupply={toggleHiddenSupply} handleDrag={handleDrag}/>
+    </main>
+  )
+
+
+
+
+
+
+
+
+
+
+
   // if the edit button is clicked, enter edit mode
   const [editMode, toggleEditMode] = React.useState(false);
   // if edit mode is true,

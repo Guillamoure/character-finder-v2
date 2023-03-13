@@ -1,0 +1,14 @@
+.square {
+    border: 1px solid grey;
+    background-color: white;
+    box-sizing: border-box;
+}
+
+#page {
+    display: grid;
+    background-color: white;
+    margin: 8px auto;
+    box-shadow: 1px 1px 4px #666;
+    border-radius: 2px;
+    padding: 2%;
+}
