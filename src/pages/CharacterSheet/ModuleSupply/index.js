@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import "./index.scss";
 import SmallTextBox from "../Modules/SmallTextBox";
+import ModuleContainer from "../Modules/ModuleContainer";
 
 const ModuleSuppply = ({hiddenSupply, toggleHiddenSupply, handleDrag}) => {
 
@@ -9,9 +10,9 @@ const ModuleSuppply = ({hiddenSupply, toggleHiddenSupply, handleDrag}) => {
       return <button id="supply-button" onClick={() => toggleHiddenSupply(false)}>+</button>
     } else {
       return (
-        <div>
-          <SmallTextBox handleDrag={handleDrag}/>
-        </div>
+        <ModuleContainer handleDrag={handleDrag} moduleType={"smallTextBox"}>
+          <SmallTextBox/>
+        </ModuleContainer>
       )
     }
   

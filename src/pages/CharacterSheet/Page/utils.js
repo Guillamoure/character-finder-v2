@@ -1,4 +1,7 @@
+import ModuleContainer from "../Modules/ModuleContainer"
+import { Constants } from "../Modules/constants"
 import SmallTextBox from "../Modules/SmallTextBox"
+
 
 export const validPlacement = (grid, {unitsHigh, unitsWide, percentageX, percentageY}, {x, y}) => {
   let valid = true
@@ -49,8 +52,8 @@ export const removeElementFromModules = (id, modules) => {
 
 export const renderModule = (module) => {
   switch(module.moduleType){
-    case "small-text-box":
-      return <SmallTextBox data={module.data} />
+    case "smallTextBox":
+      return <SmallTextBox data={module}/>
   }
 }
 

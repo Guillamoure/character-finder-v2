@@ -2,7 +2,8 @@ import React, { useState, useEffect } from "react";
 import "./index.scss";
 import GridTile from "./GridTile";
 import { validPlacement, removeElementFromGrid, removeElementFromModules, renderModule } from "./utils";
-
+import ModuleContainer from "../Modules/ModuleContainer";
+import { Constants } from "../Modules/constants";
 
 const Page = ({dragData, setDragData, hoveredSquare, setHoveredSquare, handleDrag}) => {
   // const [selectedGridTile, toggleSelectedGridTile] = React.useState(null);
@@ -193,7 +194,7 @@ const Page = ({dragData, setDragData, hoveredSquare, setHoveredSquare, handleDra
       return a.map((b, row) => {
         if (b.id.includes("square")) {
           return <GridTile data={b} handleDrop={handleDrop} modules={modules} handleHover={handleHover} dragData={dragData} grid={grid}/>;
-        } else if (b.id.includes("box")){
+        } else {
           if (row != 0 && grid[col][row-1].id === b.id){
             return
           }
@@ -201,8 +202,13 @@ const Page = ({dragData, setDragData, hoveredSquare, setHoveredSquare, handleDra
             return
           }
           let module = modules.find(box => box.data.colStart === col && box.data.rowStart === row)
+          let { id } = module.data
           // let coordinates = {rowStart, rowEnd, colStart, colEnd}
-          return renderModule(module)
+          return (
+            <ModuleContainer handleDrag={handleDrag} id={id} moduleType={module.moduleType}>
+              {renderModule(module)}
+            </ModuleContainer>
+          )
           // return <Box id={id} color={color} h={h} w={w} area={b.id} handleDrag={handleDrag} element={element} coordinates={coordinates} removeElement={removeElement}/>
         }
       });
