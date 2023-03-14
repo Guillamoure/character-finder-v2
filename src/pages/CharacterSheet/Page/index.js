@@ -100,7 +100,7 @@ const Page = ({dragData, setDragData, hoveredSquare, setHoveredSquare, handleDra
       } else {
         let [rowStart, rowEnd, colStart, colEnd] = findValidIndices()
         const data = {rowStart, rowEnd, colStart, colEnd, id}
-        setModules([...modules, {...item, data}])
+        setModules([...modules, {moduleType: item.moduleType, data}])
       }
       // this would move the new component, but it wouldnt clear out the old component in the grid array :/
       let updatedGrid = item.coordinates ? removeElementFromGrid(item.id, [...grid]) : [...grid]
@@ -153,7 +153,6 @@ const Page = ({dragData, setDragData, hoveredSquare, setHoveredSquare, handleDra
     return indices
   }
 
-  // TODO: this is wrong! it should find the element with the highest index at the end, and use that +1
   const countOfThisComponent = (item) => {
     let highestIndex = -1
     modules.forEach(b => {
@@ -196,7 +195,8 @@ const Page = ({dragData, setDragData, hoveredSquare, setHoveredSquare, handleDra
   }
 
   const renderGrid = () => {
-    console.log(grid)
+    console.log("grid", grid)
+    console.log("modules", modules)
     return grid.map((a, col) => {
       return a.map((b, row) => {
         if (b.id.includes("square")) {
