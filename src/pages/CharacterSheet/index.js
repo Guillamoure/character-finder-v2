@@ -8,22 +8,21 @@ import GridTile from "./Page/GridTile";
 import { findSectionPercentage } from './utils'
 import ModuleSuppply from "./ModuleSupply";
 
-
 const CharacterSheet = () => {
 
   const [dragData, setDragData] = useState({})
   const [hoveredSquare, setHoveredSquare] = useState("")
   const [hiddenSupply, toggleHiddenSupply] = useState(true)
 
-  const handleDrop = () => {
+  const handleDrop = (x, y, updatedGrid, setGrid) => {
     setDragData({})
     setHoveredSquare("")
   }
 
   const [, drop] = useDrop(() => ({
     accept: "MODULE",
-    drop: handleDrop
-  }))
+    drop: () => handleDrop(undefined, undefined, dragData, hoveredSquare)
+  }), [dragData, hoveredSquare])
 
   const handleDrag = ({perX, perY, w, h, id}) => {
     if (!perX){
@@ -49,6 +48,7 @@ const CharacterSheet = () => {
         hoveredSquare={hoveredSquare}
         setHoveredSquare={setHoveredSquare}
         handleDrag={handleDrag}
+        handleDrop={handleDrop}
       />
       <ModuleSuppply hiddenSupply={hiddenSupply} toggleHiddenSupply={toggleHiddenSupply} handleDrag={handleDrag}/>
     </main>

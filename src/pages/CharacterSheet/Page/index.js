@@ -5,7 +5,7 @@ import { validPlacement, removeElementFromGrid, removeElementFromModules, render
 import ModuleContainer from "../Modules/ModuleContainer";
 import { Constants } from "../Modules/constants";
 
-const Page = ({dragData, setDragData, hoveredSquare, setHoveredSquare, handleDrag}) => {
+const Page = ({dragData, setDragData, hoveredSquare, setHoveredSquare, handleDrag, handleDrop}) => {
   // const [selectedGridTile, toggleSelectedGridTile] = React.useState(null);
 
   const rowSquares = 15;
@@ -58,6 +58,8 @@ const Page = ({dragData, setDragData, hoveredSquare, setHoveredSquare, handleDra
       })
 
       setGrid(updatedGrid)
+    } else {
+      console.log(dragData, hoveredSquare)
     }
   }, [dragData, hoveredSquare])
 
@@ -78,11 +80,31 @@ const Page = ({dragData, setDragData, hoveredSquare, setHoveredSquare, handleDra
     }
   }, [])
 
+  // updating, to see if a modules was removed from grid without being deleted from modules
+  useEffect(() => {
+    if (!!hoveredSquare){
+      return
+    }
+    modules.forEach(module => {
+      let {data: {colStart, colEnd, rowStart, rowEnd, id}} = module
+      if (grid[colStart][rowStart].id !== id){
+        const updatedGrid = [...grid].map((a, i) => {
+          return a.map((b, j) => {
+            if (i >= colStart && i <= colEnd && j >= rowStart && j <= rowEnd){
+              return {id}
+            } else {return b}
+          })
+        })
+        setGrid(updatedGrid)
+      }
+    })
+  }, [grid, hoveredSquare])
+
   const handleHover = (id) => {
     setHoveredSquare(id)
   }
 
-  const handleDrop = (item) => {
+  const handleGridDrop = (item) => {
     console.log(item)
     if (isValid()){
       let count = countOfThisComponent(item)
@@ -113,9 +135,20 @@ const Page = ({dragData, setDragData, hoveredSquare, setHoveredSquare, handleDra
         })
       })
       setGrid(updatedGrid)
-    } 
-    setDragData({})
-    setHoveredSquare("")
+    } else {
+      if (dragData?.id){
+        let { data: { rowStart, rowEnd, colStart, colEnd, id } } = modules.find(m => m.data.id === dragData.id)
+        const updatedGrid = [...grid].map((a, i) => {
+          return a.map((b, j) => {
+            if (i >= colStart && i <= colEnd && j >= rowStart && j <= rowEnd){
+              return {id: `${item.id || id}`}
+            } else {return b}
+          })
+        })
+        handleDrop(null, null)
+        setGrid(updatedGrid)
+      }
+    }
   }
 
   const findEmptyBoxIndex = (id) => {
@@ -195,12 +228,12 @@ const Page = ({dragData, setDragData, hoveredSquare, setHoveredSquare, handleDra
   }
 
   const renderGrid = () => {
-    console.log("grid", grid)
-    console.log("modules", modules)
+    // console.log("grid", grid)
+    // console.log("modules", modules)
     return grid.map((a, col) => {
       return a.map((b, row) => {
         if (b.id.includes("square")) {
-          return <GridTile data={b} handleDrop={handleDrop} modules={modules} handleHover={handleHover} dragData={dragData} grid={grid}/>;
+          return <GridTile data={b} handleDrop={handleGridDrop} modules={modules} handleHover={handleHover} dragData={dragData} grid={grid}/>;
         } else {
           if (row != 0 && grid[col][row-1].id === b.id){
             return

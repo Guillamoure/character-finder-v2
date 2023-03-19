@@ -1,7 +1,6 @@
 import React, { useState } from 'react'
 
 const SmallTextBox = ({data}) => {
-	console.log(data)
 	const [header, setHeader] = useState("Header")
 	const [body, setBody] = useState("Insert Text Here")
 
