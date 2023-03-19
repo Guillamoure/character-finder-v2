@@ -58,8 +58,6 @@ const Page = ({dragData, setDragData, hoveredSquare, setHoveredSquare, handleDra
       })
 
       setGrid(updatedGrid)
-    } else {
-      console.log(dragData, hoveredSquare)
     }
   }, [dragData, hoveredSquare])
 
@@ -145,7 +143,7 @@ const Page = ({dragData, setDragData, hoveredSquare, setHoveredSquare, handleDra
             } else {return b}
           })
         })
-        handleDrop(null, null)
+        handleDrop()
         setGrid(updatedGrid)
       }
     }
@@ -233,7 +231,7 @@ const Page = ({dragData, setDragData, hoveredSquare, setHoveredSquare, handleDra
     return grid.map((a, col) => {
       return a.map((b, row) => {
         if (b.id.includes("square")) {
-          return <GridTile data={b} handleDrop={handleGridDrop} modules={modules} handleHover={handleHover} dragData={dragData} grid={grid}/>;
+          return <GridTile data={b} handleDrop={handleGridDrop} modules={modules} handleHover={handleHover} dragData={dragData} grid={grid} key={(col+1) * row}/>;
         } else {
           if (row != 0 && grid[col][row-1].id === b.id){
             return
@@ -245,7 +243,7 @@ const Page = ({dragData, setDragData, hoveredSquare, setHoveredSquare, handleDra
           let { id } = module.data
           // let coordinates = {rowStart, rowEnd, colStart, colEnd}
           return (
-            <ModuleContainer handleDrag={handleDrag} id={id} moduleType={module.moduleType}>
+            <ModuleContainer handleDrag={handleDrag} id={id} moduleType={module.moduleType} key={(col+1) * row}>
               {renderModule(module)}
             </ModuleContainer>
           )

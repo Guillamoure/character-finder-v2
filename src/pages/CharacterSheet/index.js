@@ -14,14 +14,14 @@ const CharacterSheet = () => {
   const [hoveredSquare, setHoveredSquare] = useState("")
   const [hiddenSupply, toggleHiddenSupply] = useState(true)
 
-  const handleDrop = (x, y, updatedGrid, setGrid) => {
+  const handleDrop = (d) => {
     setDragData({})
     setHoveredSquare("")
   }
 
   const [, drop] = useDrop(() => ({
     accept: "MODULE",
-    drop: () => handleDrop(undefined, undefined, dragData, hoveredSquare)
+    drop: handleDrop
   }), [dragData, hoveredSquare])
 
   const handleDrag = ({perX, perY, w, h, id}) => {
