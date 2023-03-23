@@ -4,7 +4,7 @@ import { Constants } from '../constants';
 
 const ModuleContainer = (props) => {
   
-  const {handleDrag, id, moduleType} = props
+  const {handleDrag, id, moduleType, page} = props
   const {w, h} = Constants[moduleType]
   
 	const [{getInitialClientOffset, getInitialSourceClientOffset, isDragging}, drag] = useDrag(() => ({
@@ -27,7 +27,7 @@ const ModuleContainer = (props) => {
 			perX = (getInitialClientOffset.x - getInitialSourceClientOffset.x)/ width
 			perY = (getInitialClientOffset.y - getInitialSourceClientOffset.y)/ height
 	
-			handleDrag({perX, perY, w, h, id})
+			handleDrag({perX, perY, w, h, id, page})
 	
 		}
 	}, [isDragging])

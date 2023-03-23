@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import { useDrop } from "react-dnd";
 
-const GridTile = ({ data, handleDrop, grid, modules, dragData, handleHover }) => {
+const GridTile = ({ data, handleDrop, grid, modules, dragData, handleHover, page }) => {
 
   const [{isOver, getItem}, drop] = useDrop(() => ({
     accept: "MODULE",

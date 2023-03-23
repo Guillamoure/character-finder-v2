@@ -5,7 +5,7 @@ import { validPlacement, removeElementFromGrid, removeElementFromModules, render
 import ModuleContainer from "../Modules/ModuleContainer";
 import { Constants } from "../Modules/constants";
 
-const Page = ({dragData, setDragData, hoveredSquare, setHoveredSquare, handleDrag, handleDrop}) => {
+const Page = ({dragData, setDragData, hoveredSquare, setHoveredSquare, handleDrag, handleDrop, modules, setModules, page}) => {
   // const [selectedGridTile, toggleSelectedGridTile] = React.useState(null);
 
   const rowSquares = 15;
@@ -27,7 +27,6 @@ const Page = ({dragData, setDragData, hoveredSquare, setHoveredSquare, handleDra
   // };
 
   const [grid, setGrid] = useState([])
-  const [modules, setModules] = useState([])
 
   // useEffect to track and color squares if they are valid placements for modules while grabbed
   useEffect(() => {
@@ -116,11 +115,11 @@ const Page = ({dragData, setDragData, hoveredSquare, setHoveredSquare, handleDra
             return box
           }
         })
-        setModules(updateModules)
+        setModules(updateModules, page)
       } else {
         let [rowStart, rowEnd, colStart, colEnd] = findValidIndices()
         const data = {rowStart, rowEnd, colStart, colEnd, id}
-        setModules([...modules, {moduleType: item.moduleType, data}])
+        setModules([...modules, {moduleType: item.moduleType, data}], page)
       }
       // this would move the new component, but it wouldnt clear out the old component in the grid array :/
       let updatedGrid = item.coordinates ? removeElementFromGrid(item.id, [...grid]) : [...grid]
@@ -222,7 +221,7 @@ const Page = ({dragData, setDragData, hoveredSquare, setHoveredSquare, handleDra
 
   const removeElement = (id) => {
     setGrid(removeElementFromGrid(id, grid))
-    setModules(removeElementFromModules(id, modules))
+    setModules(removeElementFromModules(id, modules), page)
   }
 
   const renderGrid = () => {
@@ -243,7 +242,7 @@ const Page = ({dragData, setDragData, hoveredSquare, setHoveredSquare, handleDra
           let { id } = module.data
           // let coordinates = {rowStart, rowEnd, colStart, colEnd}
           return (
-            <ModuleContainer handleDrag={handleDrag} id={id} moduleType={module.moduleType} key={(col+1) * row}>
+            <ModuleContainer handleDrag={handleDrag} id={id} moduleType={module.moduleType} key={(col+1) * row} page={page}>
               {renderModule(module)}
             </ModuleContainer>
           )
