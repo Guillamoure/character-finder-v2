@@ -29,3 +29,13 @@
   border: 1px solid black;
   background-color: #eee;
 }
+
+.clean-number-input {
+  margin: 0;
+  text-align: center;
+}
+
+.clean-number-input::-webkit-outer-spin-button,
+.clean-number-input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+}

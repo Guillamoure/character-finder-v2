@@ -1,6 +1,7 @@
 import ModuleContainer from "../Modules/ModuleContainer"
 import { Constants } from "../Modules/constants"
 import SmallTextBox from "../Modules/SmallTextBox"
+import PathfinderAbilityScores from "../Modules/PathfinderAbilityScores"
 
 
 export const validPlacement = (grid, {unitsHigh, unitsWide, percentageX, percentageY}, {x, y}) => {
@@ -54,6 +55,8 @@ export const renderModule = (module) => {
   switch(module.moduleType){
     case "smallTextBox":
       return <SmallTextBox data={module}/>
+    case "pathfinderAbilityScores":
+      return <PathfinderAbilityScores data={module}/>
   }
 }
 
