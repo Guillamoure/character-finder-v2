@@ -1,8 +1,11 @@
 import React, { useState, useEffect } from "react";
 import "./index.scss";
-import SmallTextBox from "../Modules/SmallTextBox";
+import SmallTextBox from "../Modules/Boxes/SmallTextBox";
 import ModuleContainer from "../Modules/ModuleContainer";
 import PathfinderAbilityScores from "../Modules/PathfinderAbilityScores";
+import OneOneSmall from "../Modules/Boxes/OneOneSmall";
+import OneOneMedium from "../Modules/Boxes/OneOneMedium";
+import OneOneLarge from "../Modules/Boxes/OneOneLarge";
 
 const ModuleSuppply = ({hiddenSupply, toggleHiddenSupply, handleDrag}) => {
 
@@ -17,6 +20,15 @@ const ModuleSuppply = ({hiddenSupply, toggleHiddenSupply, handleDrag}) => {
           </ModuleContainer>
           <ModuleContainer handleDrag={handleDrag} moduleType={"pathfinderAbilityScores"}>
             <PathfinderAbilityScores/>
+          </ModuleContainer>
+          <ModuleContainer handleDrag={handleDrag} moduleType={"box1x1Small"}>
+            <OneOneSmall/>
+          </ModuleContainer>
+          <ModuleContainer handleDrag={handleDrag} moduleType={"box1x1Medium"}>
+            <OneOneMedium/>
+          </ModuleContainer>
+          <ModuleContainer handleDrag={handleDrag} moduleType={"box1x1Large"}>
+            <OneOneLarge/>
           </ModuleContainer>
           <button id="supply-button" style={{width: "90%", bottom: "5%", fontSize: "1.1em"}} onClick={() => toggleHiddenSupply(true)}>Close Modules</button>
         </>

@@ -5,21 +5,23 @@
 }
 
 .pathfinder-ability-scores {
-  width: 40%;
+  width: 30%;
   border: none;
   background: transparent;
   font-size: large;
   padding: 0;
+  border-left: 1px solid black;
+  border-right: 1px solid black;
 }
 
 .pathfinder-ability-scores-mod {
   font-size: large;
-  width: 30%;
+  width: 35%;
   text-align: center;
 }
 
 .pathfinder-ability-scores-name {
   font-size: large;
-  width: 27%;
+  width: 32%;
   margin-left: 3%;
 }

@@ -1,7 +1,10 @@
 import ModuleContainer from "../Modules/ModuleContainer"
 import { Constants } from "../Modules/constants"
-import SmallTextBox from "../Modules/SmallTextBox"
+import SmallTextBox from "../Modules/Boxes/SmallTextBox"
 import PathfinderAbilityScores from "../Modules/PathfinderAbilityScores"
+import OneOneSmall from "../Modules/Boxes/OneOneSmall"
+import OneOneMedium from "../Modules/Boxes/OneOneMedium"
+import OneOneLarge from "../Modules/Boxes/OneOneLarge"
 
 
 export const validPlacement = (grid, {unitsHigh, unitsWide, percentageX, percentageY}, {x, y}) => {
@@ -57,6 +60,12 @@ export const renderModule = (module) => {
       return <SmallTextBox data={module}/>
     case "pathfinderAbilityScores":
       return <PathfinderAbilityScores data={module}/>
+    case "box1x1Small":
+      return <OneOneSmall data={module}/>
+    case "box1x1Medium":
+      return <OneOneMedium data={module}/>
+    case "box1x1Large":
+      return <OneOneLarge data={module}/>
   }
 }
 

@@ -15,13 +15,8 @@ const PathfinderAbilityScores = ({data}) => {
     return keys.map((key, i) => {
       const value = abilityScores[key]
       const onChange = (e) => handleAbilityScores(key, e.target.value)
-      const style = {}
-      if (i === 5){
-        style.borderBottom = ""
-      }
-      console.log(style.borderBottom)
       return (
-        <div className="pathfinder-ability-scores-row" style={style}>
+        <div className="pathfinder-ability-scores-row">
           <label className="pathfinder-ability-scores-name">{key.charAt(0).toUpperCase() + key.slice(1)}</label>
           <input type="number" className="clean-number-input pathfinder-ability-scores" value={value} onChange={onChange} />
           <div className="pathfinder-ability-scores-mod">{pluser(mod(value))}</div>
@@ -33,9 +28,9 @@ const PathfinderAbilityScores = ({data}) => {
   return (
     <div>
       <div style={{display: "flex"}}>
-        <div style={{textAlign: "center", width: "30%", fontSize: "small"}}>Name</div>
-        <div style={{textAlign: "center", width: "40%", fontSize: "small"}}>Score</div>
-        <div style={{textAlign: "center", width: "30%", fontSize: "small"}}>Mod</div>
+        <div style={{textAlign: "center", width: "30%", fontSize: "12px"}}>Name</div>
+        <div style={{textAlign: "center", width: "40%", fontSize: "12px"}}>Score</div>
+        <div style={{textAlign: "center", width: "30%", fontSize: "12px"}}>Mod</div>
       </div>
       {renderAbilityScores()}
     </div>
