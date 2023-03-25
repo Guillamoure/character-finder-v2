@@ -1,23 +1,30 @@
-import React, {useState} from "react";
+import React, { useState, useEffect } from "react";
 import "./index.scss";
 import { useDrop } from "react-dnd";
 import Page from "./Page";
-import EditToggle from "./EditToggle";
-import AbilityScores from "./CharacterData/AbiltyScores";
-import GridTile from "./Page/GridTile";
 import { findSectionPercentage } from './utils'
 import ModuleSuppply from "./ModuleSupply";
 import Trash from "./Trash";
+import { get, set, updateModulesLocalStorage } from "../utils";
 
-const CharacterSheet = () => {
+
+const CharacterSheet = ({character = "default"}) => {
 
   const [dragData, setDragData] = useState({})
   const [hoveredSquare, setHoveredSquare] = useState("")
   const [hiddenSupply, toggleHiddenSupply] = useState(true)
   const [modules, setModules] = useState([[]])
 
+  useEffect(() => {
+    const localStorageModules = get(character)
+    if (localStorageModules === null){
+      set(character, modules)
+    } else {
+      setModules(localStorageModules)
+    }
+  }, [])
+
   const handleDrop = () => {
-    console.log("clearing drag data")
     setDragData({})
     setHoveredSquare("")
   }
@@ -48,6 +55,7 @@ const CharacterSheet = () => {
     let updatedModules = [...modules]
     updatedModules[page - 1] = newModules
     setModules(updatedModules)
+    updateModulesLocalStorage(character, updatedModules)
   }
 
   const removeModule = (module, page) => {
@@ -59,6 +67,12 @@ const CharacterSheet = () => {
       return mod.data.id !== module.data.id
     })
     setModules(updatedModules)
+    updateModulesLocalStorage(character, updatedModules)
+  }
+
+  const handleClear = () => {
+    updateModulesLocalStorage(character, [[]])
+    setModules([[]])
   }
 
   const renderPages = () => {
@@ -75,6 +89,7 @@ const CharacterSheet = () => {
           modules={pageModules}
           setModules={handleModules}
           page={page}
+          key={page}
         />
       )
     })
@@ -85,6 +100,7 @@ const CharacterSheet = () => {
       {renderPages()}
       <ModuleSuppply hiddenSupply={hiddenSupply} toggleHiddenSupply={toggleHiddenSupply} handleDrag={handleDrag}/>
       {!!hoveredSquare && <Trash modules={modules} dragData={dragData} removeModule={removeModule}/>}
+      <button style={{position: "fixed"}} onClick={handleClear}>Clear</button>
     </main>
   )
 
